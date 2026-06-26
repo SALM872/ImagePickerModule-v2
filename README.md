@@ -1,256 +1,301 @@
 # 📸 ImagePickerModule
 
-A reusable Camera & Gallery Image Picker Module built with **Jetpack Compose**, **Kotlin**, and **MVVM Architecture**.
+A lightweight, reusable, Jetpack Compose Image Picker library for Android.
 
-This project demonstrates a clean and scalable approach to image selection using Android's modern Activity Result APIs.
+ImagePickerModule is designed to eliminate repetitive image picker code from Android projects. Instead of rewriting Camera, Gallery, URI handling, and configuration logic for every project, developers can integrate this module and use a single clean API.
 
----
-
-# ✨ Features
-
-- 📷 Capture Image from Camera
-- 🖼️ Pick Image from Gallery
-- 👀 Image Preview Screen
-- 🧠 MVVM Architecture
-- ⚡ Jetpack Compose UI
-- 🧭 Navigation Compose
-- 📂 URI Based Image Handling
-- 🔒 FileProvider Support
-- 📦 Modular Project Structure
-- 🚀 Easy to Convert into a Reusable Library
+> Version: **2.0.0 Foundation Release**
 
 ---
 
-# 📱 Screens
+# ✨ Current Features
 
-- Splash Screen
-- Home Screen
-- Camera Capture
-- Gallery Picker
-- Preview Screen
+✅ Android Library Module
+
+✅ Jetpack Compose Ready
+
+✅ Camera Image Capture
+
+✅ Gallery Image Selection
+
+✅ Clean Public API
+
+✅ ImageData Result
+
+✅ ImageSource Support
+
+✅ Configurable Architecture
+
+✅ Internal Modular Design
 
 ---
 
-# 🏗 Architecture
+# 🎯 Purpose
+
+This library is created to provide a reusable Image Picker that can be plugged into any Android Jetpack Compose project.
+
+Instead of writing Camera, Gallery, Launcher, URI management, and configuration logic every time, developers only need to integrate this module.
+
+The library handles the internal implementation while exposing a clean API.
+
+---
+
+# 🚀 Current Public API
+
+Example usage:
+
+```kotlin
+val launcher = ImagePicker.rememberLauncher(
+    config = ImagePickerConfig(),
+    callback = object : ImagePickerCallback {
+
+        override fun onImageSelected(image: ImageData) {
+
+        }
+
+        override fun onCancel() {
+
+        }
+
+        override fun onError(message: String) {
+
+        }
+    }
+)
+
+launcher.openCamera()
+
+launcher.openGallery()
+```
+
+---
+
+# 📦 Current Module Structure
 
 ```
-User
+com.imagepicker.module
+│
+├── api
+│   └── ImagePicker
+│
+├── callback
+│   └── ImagePickerCallback
+│
+├── config
+│   ├── ImagePickerConfig
+│   └── PickerMode
+│
+├── image
+│   ├── ImageData
+│   └── ImageSource
+│
+├── engine
+│   └── ImagePickerEngine
+│
+├── permission
+│   ├── PermissionManager
+│   └── PermissionState
+│
+└── imagepicker
+    └── internal
+        ├── launcher
+        ├── storage
+        └── ...
+```
 
-        │
+---
 
-        ▼
+# 📚 Architecture
 
-HomeScreen
+```
+Developer
 
-        │
+      │
 
-        ▼
+ImagePicker.rememberLauncher()
+
+      │
+
+ImagePickerEngine
+
+      │
+
+Internal Launcher
+
+      │
 
 Camera / Gallery
 
-        │
+      │
 
-        ▼
-
-URI
-
-        │
-
-        ▼
-
-ImagePickerViewModel
-
-        │
-
-        ▼
-
-PreviewScreen
+ImageData Callback
 ```
 
 ---
 
-# 📂 Project Structure
+# 📁 Package Responsibilities
 
-```
-ImagePickerModule
+## api
 
-│
+Public entry point of the library.
 
-├── camera
-├── config
-├── di
-├── gallery
-├── image
-├── navigation
-├── permission
-├── storage
-├── ui
-├── viewmodel
-
-│
-
-├── MainActivity.kt
-└── README.md
-```
+Contains only the APIs that developers should use.
 
 ---
 
-# 🛠 Tech Stack
+## callback
 
-- Kotlin
-- Jetpack Compose
-- Material 3
-- Navigation Compose
-- MVVM
-- Activity Result API
-- FileProvider
-- Coil Image Loading
-- Android Studio Narwhal
+Provides callback interfaces for:
+
+- Image Selected
+- Cancel
+- Error
 
 ---
 
-# 📦 Module Components
+## config
 
-### Camera
+Contains library configuration.
 
-- Camera Launcher
-- Temporary Image URI
-- FileProvider Support
-
-### Gallery
-
-- Android Photo Picker
-- URI Based Selection
-
-### Storage
-
-- Temp Image Manager
-
-### ViewModel
-
-- StateFlow
-- Image State Management
-
-### Navigation
-
-- Splash
-- Home
-- Preview
+Future features will also be controlled from here.
 
 ---
 
-# 🚀 Current Version
+## image
 
-**Version : 1.0.0**
+Contains data models.
 
-### Status
+ImageData is the result object returned to developers.
 
-✅ Stable
-
-Working Features
-
-- Splash Screen
-- Camera Capture
-- Gallery Picker
-- Image Preview
-- ViewModel State Management
-- URI Handling
-- Navigation
+ImageSource identifies whether the image comes from Camera or Gallery.
 
 ---
 
-# 🎯 Future Roadmap
+## engine
 
-## Version 1.1
+Reserved for business logic.
 
-- Code Cleanup
-- Better Error Handling
-- Camera Permission Improvements
+Acts as the brain of the library.
 
-## Version 2.0
-
-- Fully Reusable Android Library
-- rememberImagePicker()
-- ImagePickerLauncher()
-- Public API
-- Internal Architecture Hidden
-- Plug & Play Integration
+Future versions will move internal logic here.
 
 ---
 
-# 💻 Requirements
+## permission
 
-- Android Studio Narwhal or newer
-- Kotlin 2.0+
-- AGP 8.13+
-- Compile SDK 36
-- Min SDK 24
+Handles runtime permission states.
 
----
+Current implementation is basic.
 
-# 📸 Preview
-
-Camera
-
-↓
-
-Capture Image
-
-↓
-
-Preview Screen
-
-Gallery
-
-↓
-
-Select Image
-
-↓
-
-Preview Screen
+Will be expanded in future versions.
 
 ---
 
-# 📚 Learning Goals
+## internal
 
-This project is part of a reusable Android Module ecosystem.
+Contains all hidden implementation.
 
-Future modules include:
-
-- GoogleAuthModule
-- PdfModule
-- NotificationModule
-- GoogleSheetModule
-- CameraModule
-- ScannerModule
-- PermissionModule
-- NetworkModule
-
-All modules will follow the same clean architecture and modular design principles.
+Developers should never access these classes directly.
 
 ---
 
-# 🤝 Contributing
+# ✅ What Developers Can Do Right Now
 
-Suggestions, improvements and feature requests are always welcome.
+Current Foundation Version supports:
 
----
+✔ Open Camera
 
-# 📄 License
+✔ Open Gallery
 
-This project is created for educational purposes and reusable Android module development.
+✔ Receive selected image
 
----
+✔ Detect image source
 
-# 👨‍💻 Author
-
-**Salman Farsi**
-
-Android Developer
-
-Jetpack Compose • Kotlin • Modular Android Architecture
+✔ Reuse the module across multiple projects
 
 ---
 
-⭐ If you found this project useful, consider giving it a Star on GitHub.
+# ❌ Currently Not Included
+
+The following features are intentionally reserved for future releases.
+
+- Automatic Permission Request
+- Camera/Gallery Chooser
+- Multiple Image Selection
+- Image Cropping
+- Image Compression
+- Video Picker
+- Document Picker
+- CameraX Integration
+- Cache Management
+- Theme Customization
+
+---
+
+# 🛣 Roadmap
+
+## Version 3
+
+- Smart Permission Flow
+- Camera/Gallery Chooser
+- Multiple Selection
+- Better Configuration
+
+---
+
+## Version 4
+
+- Image Crop
+- Compression
+- Image Quality Control
+
+---
+
+## Version 5
+
+- Video Picker
+- Document Picker
+- CameraX Support
+- Built-in Preview
+
+---
+
+# 🎯 Design Philosophy
+
+This library follows three principles:
+
+### Simplicity
+
+Developers should write as little code as possible.
+
+---
+
+### Reusability
+
+Build once.
+
+Use everywhere.
+
+---
+
+### Maintainability
+
+Public API should remain stable while internal implementation evolves.
+
+---
+
+# 💡 Current Status
+
+Foundation Version
+
+Production Architecture
+
+Feature Expansion In Progress
+
+---
+
+# ❤️ Author
+
+Developed with Jetpack Compose
+
+Designed for reusable Android development.
