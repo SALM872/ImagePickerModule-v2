@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.maven.publish)
+    `maven-publish`
 }
 
 android {
@@ -11,10 +11,11 @@ android {
 
     defaultConfig {
         minSdk = 26
-
-
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        compose = true
     }
 
     buildTypes {
@@ -26,20 +27,25 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures {
-        compose = true
+
+    // ✅ FIX 1: singleVariant MUST be inside android {} block
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
     }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -58,15 +64,16 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.androidx.navigation.compose)
 }
+
+// ✅ FIX 2: afterEvaluate only for publications block
 afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
                 from(components["release"])
-
-                groupId = "com.github.SALM872"
-                artifactId = "imagepicker"
-                version = "3.0.0"
+                groupId    = "com.github.SALM872"
+                artifactId = "ImagePickerModule-v2"
+                version    = "3.0.0"
             }
         }
     }
